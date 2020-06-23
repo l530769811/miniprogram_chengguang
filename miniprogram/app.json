@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/homePage/homePage",
+    "pages/myPage/myPage",
+    "pages/index/index_help",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "pages/openapi/openapi",
+    "pages/openapi/serverapi/serverapi",
+    "pages/openapi/callback/callback",
+    "pages/openapi/cloudid/cloudid",
+    "pages/im/im",
+    "pages/im/room/room"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/homePage/homePage",
+        "iconPath": "images/home_tab.png",
+        "selectedIconPath": "images/home_tab.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/myPage/myPage",
+        "iconPath": "images/my_page_tab.png",
+        "selectedIconPath": "images/my_page_tab.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index_help",
+        "iconPath": "images/my_page_tab.png",
+        "selectedIconPath": "images/my_page_tab.png",
+        "text": "帮助"
+      }
+    ]
+  },
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

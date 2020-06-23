@@ -1,0 +1,19 @@
+<view class="top_view">
+  <text class="title_text">{{title_show_text}}</text>
+  <view style="margin:10px"></view>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
+    <block wx:for="{{show_image_url}}" wx:key="*this">
+      <swiper-item>
+        <image class="swiper-item" src="{{item}}" style="width:100%"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="line_hr"></view>
+  <view class="tool_view">
+    <view class="button_view" style="width:{{item.width}}rpx; height:{{item.height}}rpx;"
+    wx:for = "{{tool_button_info}}" bindtap="{{item.bind_function}}">
+      <button class="toolButton" style="width:{{item.width}}rpx; height:{{item.width}}rpx; background-image: url({{item.image_url}})"></button>
+      <text class = "button_text" style="width:{{item.width}}rpx; height:{{item.height-item.button_width}}rpx;">{{item.button_text}}</text>
+    </view>
+  </view>
+</view>

@@ -1,3 +1,4 @@
+const app = getApp()
 Component({
   pageLifetimes: {
     show() {
@@ -17,7 +18,18 @@ Component({
     myPageButtonImageUrl: '/images/my_page.png',
     myPageButtonText: '我的',
     toolButtonBackgroubColor: '#ff0000',
-    title_show_text : "我的空间"
+    title_show_text : "我的空间",
+    avatarUrl :'../../images/user-unlogin.png',
+    nickName:''
+  },
+  methods:{
+    onGetUserInfo: function(e) {
+      app.getUserInfo(e);
+      this.setData({        
+        avatarUrl: app.globalData.avatarUrl,
+        nickName:app.globalData.nickName
+      })
+    }
   },
 
   onGoToHome: function () {

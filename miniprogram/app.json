@@ -2,6 +2,7 @@
   "pages": [
     "pages/homePage/homePage",
     "pages/myPage/myPage",
+    "pages/onlineOrder/onlineOrder",
     "pages/index/index_help",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",

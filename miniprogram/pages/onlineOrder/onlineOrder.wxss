@@ -1,0 +1,70 @@
+.top_view {
+  background-color: #f6f6f6;
+  display: block;
+}
+
+.inline_view {
+  display: flex;
+  align-items:center;
+  flex-direction: row;
+  margin: 10rpx;
+  background-color: blue;
+}
+
+.lebel_text_style {
+  float: left;
+  color: #bfbfbf;
+  text-align: left;
+  left: 10px;
+  font-size: 16px;
+  font-weight: 32rpx;
+}
+
+.content_text_style {
+  display: inline;
+  color: #bfbfbf;
+  font-size: 32px;
+  right: 20rpx;
+}
+
+.align_right {
+  position: relative;
+  text-align: right;
+  background-color: red;
+}
+
+.align_left {
+  position: relative;
+   text-align:left;
+}
+
+.align_center {
+  position: relative;
+  text-align: center;
+}
+
+.editor_style {
+  display: block;
+  margin: 20rpx;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow: auto;
+  padding: 10px 10px 20px 10px;
+  border: 1px solid rgb(77, 70, 70);
+  background-color: #fff;
+}
+.picker_style{
+  display: block;
+  float: right;
+  background-color: #00FFFF;
+}
+
+.picker_text{
+    margin: 3px;
+    background-color: #FFFF00;
+    color: green;
+    width: auto;
+}

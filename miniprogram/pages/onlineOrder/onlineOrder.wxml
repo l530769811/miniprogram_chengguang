@@ -1,0 +1,26 @@
+<view class="top_view">
+  <view class="inline_view" style="height:120rpx;">
+    <text class="lebel_text_style align_left" style="width:30%;">地址</text>
+    <text class="content_text_style align_right" style="width:70%;">{{address}}</text>
+  </view>
+  <view class="inline_view" style="height:80rpx;">
+    <text class="lebel_text_style align_left" style="width:30%;">上门时间</text>
+    <picker class="picker_style" mode="date" value="{{date}}" bindchange="bindDateChange" style="width:auto;">
+      <view class="picker_text">
+        {{date}}
+      </view>
+    </picker>
+    <picker class="picker_style" mode="time" value="{{time_begin}}" style="width:auto;background-color: red;" bindchange="bindTimeBeginChange">
+      <view class="picker_text">
+        {{time_begin}}
+      </view>
+    </picker>
+    <text class="picker_text">~</text>
+     <picker class="picker_style" mode="time" value="{{time_end}}" style="width:auto; " bindchange="bindTimeEndChange">
+      <view class="picker_text">
+        {{time_end}}
+      </view>
+    </picker>
+  </view>
+  <editor id="editor" class="editor_style" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady"   style="width:auto;"></editor>
+</view>

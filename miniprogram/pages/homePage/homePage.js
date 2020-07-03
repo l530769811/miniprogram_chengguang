@@ -1,3 +1,5 @@
+const app = getApp()
+
 Component({
   pageLifetimes: {
     show() {
@@ -10,18 +12,18 @@ Component({
     }
   },
   data: {
-    title_show_text: "程光科技有限公司售后服务小程序",
+    title_show_text: "程光科技有限公司售前售后服务",
     tool_button_info: [{
       button_text: "在线下单",
       image_url: '/images/tool_button_image_1.png',
-      bind_function: 'onOnline',
+      bind_function: "onOnline",
       width: 120,
       height: 160,
       button_width: 80
     }, {
       button_text: "售后维修",
       image_url: '/images/tool_button_image_1.png',
-        bindap: 'onAfterSales',
+      bind_function: "onAfterSales",
       width: 120,
       height: 160,
       button_width: 80
@@ -38,18 +40,35 @@ Component({
     interval: 2000,
     duration: 500,
     previousMargin: 0,
-    nextMargin: 0
+    nextMargin: 0,
+    is_login: false
   },
   methods: {
-    onOnline:function() {
-     wx.redirectTo({
-       url: 'd',
-     });
+    onOnline() {
+      if(this.isLogin()){
+        wx.navigateTo({
+          url: '../onlineOrder/onlineOrder?id=0',
+        })
+      } else {
+        wx.switchTab({
+          url: '../myPage/myPage',
+        })
+      }
+     
     },
-    onAfterSales :function(){
-      wx.redirectTo({
-        url: 'd',
-      });
+    onAfterSales() {
+      if(this.isLogin()){
+        wx.navigateTo({
+          url: "../onlineOrder/onlineOrder?id=1",
+        })
+      } else {
+        wx.switchTab({
+          url: '../myPage/myPage',
+        })
+      }   
+    },
+    isLogin() {
+      return app.globalData.is_login;
     }
   }
 })

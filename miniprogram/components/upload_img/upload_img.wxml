@@ -1,0 +1,16 @@
+<!--components/upload_img.wxml-->
+<view class="top_view">
+   <view class="tittle_view">
+      <text class="title_text">{{title}}</text>
+      <text class="img_count_text" >{{curImgCount +'/' + maxImgCount}}</text>
+   </view>
+   <view class="upload_img_view">
+      <view class="add_img_view"  wx:for="{{UploadImgInfo}}" wx:key="{{index}}">
+         <icon class='ui_uploader_item_icon' bindtap='clearImg' data-index="{{index}}" type="clear" size="25" color="red"/>
+         <image class="upload_image" bindtap='showImg' data-index="{{index}}" src='{{item.localImgFile}}'></image>
+      </view>
+      <view class="add_img_view">
+          <image class="upload_image" src="./add_img.jpg"  bindtap='addImg' wx:if="{{curImgCount < maxImgCount}}"></image>
+      </view>  
+   </view>
+</view>

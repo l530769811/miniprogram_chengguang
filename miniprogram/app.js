@@ -24,7 +24,7 @@ App({
       openid: undefined,
     }
   },
-  Login: function () {
+  Login: function ( callback) {
 
     if (this.globalData.is_login) {
       return;
@@ -40,13 +40,17 @@ App({
               this.globalData.is_login = true;
               this.globalData.avatarUrl = res.userInfo.avatarUrl;
               this.globalData.nickName = res.userInfo.nickName;
-            }
+              
+              if(typeof callback === "function")
+              {
+                callback();
+              }              
+            },
+            
           })
-        }
+        } 
       }
     })
-
-    console.log("app.Login() " + this.globalData.avatarUrl)
 
     // 调用云函数
     wx.cloud.callFunction({

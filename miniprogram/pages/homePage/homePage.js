@@ -45,6 +45,7 @@ Component({
   },
   methods: {
     onOnline() {
+      
       if(this.isLogin()){
         wx.navigateTo({
           url: '../onlineOrder/onlineOrder?id=0',

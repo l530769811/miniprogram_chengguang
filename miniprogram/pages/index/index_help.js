@@ -13,12 +13,14 @@ Component({
   },
 
   data: {
-    avatarUrl: './user-unlogin.png',
+    avatarUrl: '../../images/user-unlogin.png',
     userInfo: {},
     logged: false,
     takeSession: false,
     requestResult: ''
   },
+methods :{
+
 
   onLoad: function() {
     if (!wx.cloud) {
@@ -99,6 +101,8 @@ Component({
           filePath,
           success: res => {
             console.log('[上传文件] 成功：', res)
+            console.log('imagePath = ' + filePath)
+            console.log('cloudPath = ' + cloudPath)
 
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
@@ -126,5 +130,5 @@ Component({
       }
     })
   },
-
+}
 })

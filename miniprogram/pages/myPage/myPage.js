@@ -10,7 +10,7 @@ Component({
       }
     }
   },
-  
+
   data: {
     homeShowImagUrl: '../index/user-unlogin.png',
     homePageButtonImageUrl: '/images/my_page.png',
@@ -18,16 +18,27 @@ Component({
     myPageButtonImageUrl: '/images/my_page.png',
     myPageButtonText: '我的',
     toolButtonBackgroubColor: '#ff0000',
-    title_show_text : "我的空间",
-    avatarUrl :'../../images/user-unlogin.png',
-    nickName:''
+    title_show_text: "我的空间",
+    avatarUrl: '../../images/user-unlogin.png',
+    nickName: ''
   },
-  methods:{
-    onGetUserInfo: function(e) {
-      app.getUserInfo(e);
-      this.setData({        
+  methods: {
+     login_callback : function(){
+      this.setData({
         avatarUrl: app.globalData.avatarUrl,
-        nickName:app.globalData.nickName
+        nickName: app.globalData.nickName
+      })
+    },
+    onLoad: function () {
+      // 获取用户信息
+      let func = this.login_callback.bind(this);
+      app.Login(func);     
+    },
+    onGetUserInfo: function (e) {
+      app.getUserInfo(e);
+      this.setData({
+        avatarUrl: app.globalData.avatarUrl,
+        nickName: app.globalData.nickName
       })
     }
   },

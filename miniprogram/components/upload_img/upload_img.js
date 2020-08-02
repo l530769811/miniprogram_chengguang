@@ -50,6 +50,9 @@ Component({
         showImgList :  tmpShowImgList,
         curImgCount: that.data.curImgCount
       })
+      that.triggerEvent('getuploaderlist', {
+        uploadList :tmpUploadImgInfo
+      });
     },
     addImg: function () {
       var that = this;
@@ -80,6 +83,9 @@ Component({
             showImgList : tmpShowImgList,
             curImgCount: that.data.curImgCount
           })
+          that.triggerEvent('getuploaderlist', {
+            uploadList :tmpUploadImgInfo
+          });
         },
       })
     },

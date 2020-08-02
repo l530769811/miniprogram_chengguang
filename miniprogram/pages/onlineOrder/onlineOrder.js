@@ -9,7 +9,8 @@ Page({
     date: "2020-01-01",
     time_begin: "12:00",
     time_end: "12:00",
-    ts:'bebug'
+    ts:'bebug',
+    upload_img_list : []
   },
 
   onLoad: function(options) {
@@ -70,6 +71,12 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       time_end: e.detail.value
+    })
+  },
+  getUploaderList:function(e){
+    console.log('onlineOder.getUploaderList()  = ' + e);
+    this.setData({
+      upload_img_list : e.detail.uploadList
     })
   },
 })

@@ -28,6 +28,13 @@
   right: 20rpx;
 }
 
+.add_text_style {
+  display: inline;
+  color: #bfbfbf;
+  font-size: 16px;
+  right: 20rpx;
+}
+
 .align_right {
   position: relative;
   text-align: right;
@@ -48,8 +55,6 @@
   display: block;
   margin: 20rpx;
   box-sizing: border-box;
-  width: 100%;
-  height: 30px;
   font-size: 16px;
   line-height: 1.5;
   overflow: auto;
@@ -94,13 +99,13 @@
 .submit_button{
   display: inline;
   border-radius: 25px;
-  background-color: aqua;
+  background-color: #a6c6a6;
   margin:20px;
   text-align: center;
-  
+  right: 10px;
 }
 .submit_button:visited{
-  background-color: aqua;
+  background-color: #a6c6a6;
 }
 .submit_button:active{
   background-color:#bfbfbf;
@@ -109,12 +114,13 @@
 .return_button{
   display: inline;
   border-radius: 25px;
-  background-color: aqua;
+  background-color: #a6c6a6;
   margin:20px;
   text-align: center;
+  left: 10px;
 }
 .return_button:visited{
-  background-color: aqua;
+  background-color: #a6c6a6;
 }
 .return_button:active{
   background-color:#bfbfbf;

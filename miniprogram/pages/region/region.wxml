@@ -1,0 +1,16 @@
+<!--miniprogram/pages/region/region.wxml-->
+<view>
+<view class="section__title">省市区选择器</view>
+ <picker mode="region" value="{{region}}"  bindchange="bindRegionChange"
+  style="width=100%;">
+     <view class="picker">
+      当前选择：{{region[0]}}，{{region[1]}}，{{region[2]}}
+    </view>
+  </picker>
+  <input class="address_input" placeholder="市，街道，门牌号" type="text" bindinput="on_address_change"></input>
+  <view class="button_view">
+    <button bindtap="on_ok">确定</button>
+    <button bindtap="back_to">返回</button>
+  </view>
+</view>
+

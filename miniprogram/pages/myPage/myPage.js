@@ -12,6 +12,7 @@ Component({
   },
 
   data: {
+    show_admin_view:false,
     homeShowImagUrl: '../index/user-unlogin.png',
     homePageButtonImageUrl: '/images/my_page.png',
     homePageButtonText: '首页',
@@ -40,13 +41,25 @@ Component({
         avatarUrl: app.globalData.avatarUrl,
         nickName: app.globalData.nickName
       })
+    },
+    onShowAdminVerifyView: function () {
+     
+      this.setData({
+        show_admin_view:true,
+      })
+    },
+    onShowInfoView:function(){
+      this.setData({
+        show_admin_view:false,
+      })
+    },
+    onGoToHome: function () {
+      wx.redirectTo({
+        url: '../app/app_home',
+      })
+    },
+    password_input:function(e){
+      
     }
-  },
-
-  onGoToHome: function () {
-    wx.redirectTo({
-      url: '../app/app_home',
-    })
-  },
-
+  },  
 })

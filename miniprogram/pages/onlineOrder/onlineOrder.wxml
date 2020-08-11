@@ -1,7 +1,8 @@
 <view class="top_view">
   <view class="inline_view" style="height:120rpx;">
-    <text class="lebel_text_style align_left" style="width:30%;">地址</text>
-    <text class="content_text_style align_right" style="width:70%;">{{address}}</text>
+    <text class="lebel_text_style align_left" style="width:20%;">地址</text>
+    <text class="add_text_style align_left" style="width:60%;" bindtap="onAddressSelector">{{address}}</text>
+    <text class="content_text_style align_right" style="width:20%;" bindtap="onAddressSelector" wx:if="{{true}}">{{address_flat}}</text>
   </view>
   <view class="inline_view" style="height:80rpx;">
     <text class="lebel_text_style align_left" style="width:30%;">上门时间</text>
@@ -22,13 +23,13 @@
       </view>
     </picker>
   </view>
-  <editor id="editor" class="editor_style" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady"   style="width:auto;"></editor>
+  <editor id="editor" class="editor_style" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady"   style=" width: auto;  height: 20px;"></editor>
   <upload_img class="upload_img_style"
    max-img-count='5' title='上传图片'
    bindgetuploaderlist="getUploaderList"> 
   </upload_img>
   <view class="upload_button_view">
-    <button class="submit_button">提交</button>
-    <button class="return_button" >返回</button>
+    <button class="submit_button" bindtap="submit_to">提交</button>
+    <button class="return_button" bindtap="back_to">返回</button>
   </view>
 </view>

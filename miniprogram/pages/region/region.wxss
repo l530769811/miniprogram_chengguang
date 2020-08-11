@@ -1,0 +1,20 @@
+/* miniprogram/pages/region/region.wxss */
+.section__title{
+  margin-top: 10px;
+  margin-bottom: 3px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.picker{
+  padding: 13px;
+  background-color: #FFFFFF;
+}
+.address_input{
+  border: 2px solid;
+  margin: 10px;
+  width: auto;
+}
+
+.button_view{
+  margin: 30px 10px;
+}

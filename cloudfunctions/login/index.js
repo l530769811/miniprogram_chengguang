@@ -16,7 +16,7 @@ cloud.init({
  * 
  */
 exports.main = async (event, context) => {
-  console.log(event)
+  console.log('cloud call login event = ' + event)
   console.log(context)
 
   // 可执行其他自定义逻辑

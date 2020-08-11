@@ -22,6 +22,7 @@ App({
       avatarUrl: '',
       nickName : '',
       openid: undefined,
+      region: ['海南省', '全部', '全部'],
     }
   },
   Login: function ( callback) {
@@ -95,5 +96,37 @@ App({
     })
 
     console.log("app.Login() openid = " + this.globalData.openid)
-  }
+  },
+  push_data_to_server :function(datas, funs_obj){
+    console.log('app.push_data_to_server() call')    
+   
+    if(this.globalData.is_login && !this.globalData.openid==false)
+    {
+      console.log('app.push_data_to_server() cloud.callFunction(order_to_server)')  
+      wx.cloud.callFunction({
+        name : 'order_to_server',
+        data:{
+          owner_openid : this.globalData.openid,
+          order_datas : datas
+        },
+        success: res => {
+          if(typeof funs_obj.success === "function")
+          {
+            funs_obj.success();
+          }
+        },
+        fail: err => {
+          if(typeof funs_obj.fail === "function")
+          {
+            funs_obj.fail();
+          }
+        }
+      })
+    }   
+
+    if(typeof funs_obj.complete === "function")
+    {
+      funs_obj.complete();
+    }
+  },
 })

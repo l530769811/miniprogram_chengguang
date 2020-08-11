@@ -1,19 +1,48 @@
 const app = getApp()
 var this_editor;
 var kind = 0;
+var sumbit_data = {
+  address: '',
+  date: '',
+  time_begin: '',
+  time_end: '',
+  remark_text: '',
+  phone_number: '',
+  upload_img: [],
+  kind: -1
+}
 Page({
   data: {
-    address: '>>',
+    address: '',
+    address_flat: '>>',
     readOnly: false,
     placeholder: '备注：',
     date: "2020-01-01",
     time_begin: "12:00",
     time_end: "12:00",
-    ts:'bebug',
-    upload_img_list : []
+    remark_text: '',
+    upload_img_list: []
+  },
+  onShow: function () {
+    var date = new Date(Date.now())
+    let year = date.getFullYear(); // 获取完整的年份(4位,1970)
+    let month = date.getMonth(); // 获取月份(0-11,0代表1月,用的时候记得加上1)
+    month = month + 1
+    let day = date.getDate(); // 获取日(1-31)
+
+    let hour = date.getHours(); // 获取小时数(0-23)
+    let hour_end = (hour + 1) >= 24 ? 0 : hour + 1;
+
+    let minu = date.getMinutes(); // 获取分钟数(0-59)
+    let sec = date.getSeconds(); // 获取秒数(0-59)
+    this.setData({
+      date: year + '-' + month + '-' + day,
+      time_begin: hour + ':' + minu,
+      time_end: hour_end + ':' + minu,
+    })
   },
 
-  onLoad: function(options) {
+  onLoad: function (options) {
     const that = this;
     switch (options.id) {
       case '0':
@@ -33,19 +62,23 @@ Page({
           title: options.id
         })
     }
+
+
   },
   onInput(e) {
     this.editorCtx.getContents({
       success: (res) => {
         this.setData({
-          ts : res.text
-        })       
+          remark_text: res.text
+        })
       }
     })
   },
   onStatusChange(e) {
     const formats = e.detail
-    this.setData({ formats })
+    this.setData({
+      formats
+    })
   },
   onEditorReady() {
     const that = this
@@ -61,7 +94,7 @@ Page({
     })
   },
   bindTimeBeginChange: function (e) {
-    
+
     this.setData({
       time_begin: e.detail.value
     })
@@ -73,10 +106,66 @@ Page({
       time_end: e.detail.value
     })
   },
-  getUploaderList:function(e){
+  getUploaderList: function (e) {
     console.log('onlineOder.getUploaderList()  = ' + e);
     this.setData({
-      upload_img_list : e.detail.uploadList
+      upload_img_list: e.detail.uploadList
     })
   },
+
+  submit_to: function (e) {
+    if (this.data.address == '') {
+      wx.showToast({
+        title: '地址空着呢！',
+      })
+      return
+    }
+    sumbit_data.kind = kind;
+    sumbit_data.address = this.data.address
+    this.editorCtx.getContents({
+      success: (res) => {
+        sumbit_data.remark_text = res.text
+      }
+    })
+    sumbit_data.upload_img = this.data.upload_img_list
+    sumbit_data.date = this.data.date
+    sumbit_data.time_begin = this.data.time_begin
+    sumbit_data.time_end = this.data.time_end
+    wx.showLoading({
+      title: '提交中',
+    })
+    app.push_data_to_server(sumbit_data, {
+      complete: () => {
+        wx.hideLoading();
+      },
+      success: () => {
+       wx.showToast({
+         title: '提交已完成',
+         icon:'success'
+       })
+      },
+      fail: (res) => {
+        wx.showToast({
+          title: '提交失败，错误代码： ' + res,
+        })
+      }
+    });
+    //wx.navigateBack()
+  },
+  back_to: function (e) {
+    wx.navigateBack()
+  },
+  onAddressSelector : function(e){
+    var that = this;
+    wx.navigateTo({
+      url: '../region/region',
+      events:{
+        acceptDataFromOpenedPage : function (data) {
+          that.setData({
+            address : data.data
+          })
+        },
+      }
+    })
+  }
 })

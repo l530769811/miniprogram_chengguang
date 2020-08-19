@@ -9,15 +9,27 @@ cloud.init({
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  let { owner_openid, order_datas} = event
+  let {
+    owner_openid,
+    order_datas
+  } = event
+  let result = 0;
+  let is_valid = false;
+  switch (order_datas.kind) {
+    case 0:
+    case 1:
+      is_valid = true;
+      break;
+  }
+  if(owner_openid !=wxContext.OPENID){
+    is_valid = false;
+  }
+  if(is_valid){
 
-  console.log('cloud order_to_server openid = ' + owner_openid + ' datas' + order_datas)
-  console.log(context)
+  }
 
   return {
     event,
-    openid: wxContext.OPENID,
-    appid: wxContext.APPID,
-    unionid: wxContext.UNIONID,
+    result,
   }
 }

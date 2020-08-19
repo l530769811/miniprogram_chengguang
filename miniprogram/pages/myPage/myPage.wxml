@@ -10,7 +10,7 @@ style = "width: 100%; height: 100%;">
       size="default"
     ></button>
     <view class="userinfo-nickname-wrapper">
-      <text class="userinfo-nickname" >欢迎您 {{nickName}}</text>
+      <text class="userinfo-nickname" >{{nickName_show}}</text>
     </view>
     <button class="show_admin_button button_font" style="width: 30%;" bindtap="onShowAdminVerifyView" >管理员验证</button>
   </view>

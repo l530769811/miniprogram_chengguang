@@ -21,7 +21,8 @@ Component({
     toolButtonBackgroubColor: '#ff0000',
     title_show_text: "我的空间",
     avatarUrl: '../../images/user-unlogin.png',
-    nickName: ''
+    nickName: '',
+    nickName_show:'点击头像登录',
   },
   methods: {
      login_callback : function(){
@@ -29,6 +30,12 @@ Component({
         avatarUrl: app.globalData.avatarUrl,
         nickName: app.globalData.nickName
       })
+      if(! this.data.nickName==false){
+        this.setData({
+          avatarUrl: app.globalData.avatarUrl,
+          nickName_show : '欢迎您 ： ' + this.data.nickName
+        })
+      }
     },
     onLoad: function () {
       // 获取用户信息
@@ -37,10 +44,13 @@ Component({
     },
     onGetUserInfo: function (e) {
       app.getUserInfo(e);
-      this.setData({
-        avatarUrl: app.globalData.avatarUrl,
-        nickName: app.globalData.nickName
-      })
+      this.data.nickName =  app.globalData.nickName;
+      if(! this.data.nickName==false){
+        this.setData({
+          avatarUrl: app.globalData.avatarUrl,
+          nickName_show : '欢迎您 ： ' + this.data.nickName
+        })
+      }
     },
     onShowAdminVerifyView: function () {
      

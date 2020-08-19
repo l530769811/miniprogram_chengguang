@@ -17,13 +17,33 @@ cloud.init({
  */
 exports.main = async (event, context) => {
   console.log('cloud call login event = ' + event)
-  console.log(context)
+  //console.log(context)
 
   // 可执行其他自定义逻辑
   // console.log 的内容可以在云开发云函数调用日志查看
 
   // 获取 WX Context (微信调用上下文)，包括 OPENID、APPID、及 UNIONID（需满足 UNIONID 获取条件）等信息
   const wxContext = cloud.getWXContext()
+  const db = cloud.database()
+  let {not_first_login, nickName } = event;
+  if(not_first_login == 0 )  {
+    try{
+      const result = await db.collection('user_21_19_5_18').add({
+        data: {
+          openid_15_16_5_14 : wxContext.OPENID,
+          last_login_due : new Date(Date.now()),
+          nick_name : nickName,         
+        },
+        success: function (_res) {
+          console.log('login() db.add success res  = ' + _res)
+        }
+      })
+      
+    } catch (err){
+      console.log('login() db.add err = ' + err)
+    }
+  
+  }
 
   return {
     event,

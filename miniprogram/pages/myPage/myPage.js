@@ -12,6 +12,7 @@ Component({
   },
 
   data: {
+    is_logined : false,
     show_admin_view:false,
     homeShowImagUrl: '../index/user-unlogin.png',
     homePageButtonImageUrl: '/images/my_page.png',
@@ -23,17 +24,16 @@ Component({
     avatarUrl: '../../images/user-unlogin.png',
     nickName: '',
     nickName_show:'点击头像登录',
+    verfity_password:''
   },
   methods: {
      login_callback : function(){
-      this.setData({
-        avatarUrl: app.globalData.avatarUrl,
-        nickName: app.globalData.nickName
-      })
+      this.data.nickName =  app.globalData.nickName;
       if(! this.data.nickName==false){
         this.setData({
           avatarUrl: app.globalData.avatarUrl,
-          nickName_show : '欢迎您 ： ' + this.data.nickName
+          nickName_show : '欢迎您 ： ' + this.data.nickName,
+          is_logined: app.globalData.is_login
         })
       }
     },
@@ -48,7 +48,8 @@ Component({
       if(! this.data.nickName==false){
         this.setData({
           avatarUrl: app.globalData.avatarUrl,
-          nickName_show : '欢迎您 ： ' + this.data.nickName
+          nickName_show : '欢迎您 ： ' + this.data.nickName,
+          is_logined: app.globalData.is_login
         })
       }
     },
@@ -57,6 +58,42 @@ Component({
       this.setData({
         show_admin_view:true,
       })
+    },
+    onVerify :function(){
+      if(!this.data.verfity_password==true){
+        wx.showToast({
+          title : '密码为空'
+        })
+        return;
+      }
+      wx.showLoading({
+        title: '正在验证中',
+      }) 
+      app.admin_verify(this.data.verfity_password, {
+        complete: () => {
+          wx.hideLoading();
+        },
+         success: (res) => {
+           if(!res == true){
+            wx.showToast({
+              title: '验证失败，请确认是否是管理员或检查密码是否正确',
+              icon:'none'
+            })
+           
+           } else {
+            wx.showToast({
+              title: '验证成功',
+              icon:'success'
+            })
+           }
+        
+        },
+        fail: (res) => {
+          wx.showToast({
+            title: '验证失败，错误代码： ' + res,
+          })
+        }
+      });
     },
     onShowInfoView:function(){
       this.setData({
@@ -69,7 +106,7 @@ Component({
       })
     },
     password_input:function(e){
-      
+      this.data.verfity_password = e.detail.value;
     }
   },  
 })

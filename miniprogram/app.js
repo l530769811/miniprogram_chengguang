@@ -1,9 +1,11 @@
 //app.js
+import {hex_md5} from './md5/md5'
 App({
   onLaunch: function () {
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
+      /*
       wx.cloud.init({
         // env 参数说明：
         //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
@@ -11,6 +13,16 @@ App({
         //   如不填则使用默认环境（第一个创建的环境）
         // env: 'my-env-id',
         env: 'chengguang-n7lhq',
+        traceUser: true,
+      })
+      */
+      wx.cloud.init({
+        // env 参数说明：
+        //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
+        //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
+        //   如不填则使用默认环境（第一个创建的环境）
+        // env: 'my-env-id',
+        env: 'test-lqj-env',
         traceUser: true,
       })
     }
@@ -21,8 +33,10 @@ App({
       avatarUrl: '',
       nickName: '',
       openid: undefined,
+      account_kind: 0,
       region: ['海南省', '全部', '全部'],
     }
+    
   },
   isFirstLogin: function () {
     let no_first = 0
@@ -34,21 +48,21 @@ App({
           console.log('App.isFirstLogin() success ')
           resolve(no_first)
         },
-        fail(err){
+        fail(err) {
           console.log('App.isFirstLogin()  getStorage fail err = ' + err)
           resolve(no_first)
         }
       })
     })
 
-    return promise.then(function(res){
+    return promise.then(function (res) {
       if (res == 0) {
         wx.setStorage({
           key: 'is_first_login',
           data: 1,
         })
-      }    
-      
+      }
+
       return res;
     })
 
@@ -78,17 +92,17 @@ App({
                 }
                 console.log('App getst');
                 resolve()
-              }              
+              }
             })
           }
         }
       })
     })
     let isFirstLoginFunc = this.isFirstLogin;
-    promise.then(function(){
-      isFirstLoginFunc().then((no_first)=>{
+    promise.then(function () {
+      isFirstLoginFunc().then((no_first) => {
         console.log('App.login() no_first = ' + no_first)
-        
+       
         // 调用云函数
         wx.cloud.callFunction({
           name: 'login',
@@ -98,15 +112,15 @@ App({
           },
           success: res => {
             console.log('[云函数] [login] user openid: ', res.result.openid)
-           globalData.openid = res.result.openid
+            globalData.openid = res.result.openid
           },
           fail: err => {
-           globalData.openid = undefined;
+            globalData.openid = undefined;
             console.log('[云函数] [login] user openid: fail')
           }
         })
-      });     
-    })   
+      });
+    })
   },
 
   getUserInfo: function (e) {
@@ -122,9 +136,9 @@ App({
     }
 
     let globalData = this.globalData;
-    this.isFirstLogin().then((no_first)=>{
+    this.isFirstLogin().then((no_first) => {
       console.log('App.getUserInfo() no_first = ' + no_first)
-
+      
       // 调用云函数
       wx.cloud.callFunction({
         name: 'login',
@@ -157,12 +171,43 @@ App({
         },
         success: res => {
           if (typeof funs_obj.success === "function") {
-            funs_obj.success();
+            funs_obj.success(res);
           }
         },
         fail: err => {
           if (typeof funs_obj.fail === "function") {
-            funs_obj.fail();
+            funs_obj.fail(err);
+          }
+        }
+      })
+    }
+
+    if (typeof funs_obj.complete === "function") {
+      funs_obj.complete();
+    }
+  },
+  admin_verify: function (pw, funs_obj) {
+    let globalData = this.globalData;
+    if (this.globalData.is_login && !this.globalData.openid == false) {
+      let pw_md5 = hex_md5(pw);
+      console.log('app.admin_verify() pw_md5 = ' + pw_md5);
+      wx.cloud.callFunction({
+        name: 'admin_verify',
+        data: {
+          owner_openid: this.globalData.openid,
+          password_md5: pw_md5
+        },
+        success: res => {
+          if (typeof funs_obj.success === "function") {
+            if(!res.result.result==false){
+              this.globalData.account_kind = 1;
+            }
+            funs_obj.success(res.result.result);
+          }
+        },
+        fail: err => {
+          if (typeof funs_obj.fail === "function") {
+            funs_obj.fail(err);
           }
         }
       })

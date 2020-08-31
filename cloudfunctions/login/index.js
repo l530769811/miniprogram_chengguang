@@ -32,7 +32,9 @@ exports.main = async (event, context) => {
         data: {
           openid_15_16_5_14 : wxContext.OPENID,
           last_login_due : new Date(Date.now()),
-          nick_name : nickName,         
+          nick_name : nickName,
+          pay_password : '',
+          encrypt_kind : 0         
         },
         success: function (_res) {
           console.log('login() db.add success res  = ' + _res)
@@ -41,10 +43,9 @@ exports.main = async (event, context) => {
       
     } catch (err){
       console.log('login() db.add err = ' + err)
-    }
-  
+    }  
   }
-
+  console.log('login() return ')
   return {
     event,
     openid: wxContext.OPENID,

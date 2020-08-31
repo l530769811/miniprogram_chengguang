@@ -151,11 +151,19 @@ Page({
         complete: () => {
           wx.hideLoading();
         },
-         success: () => {
-         wx.showToast({
-           title: '提交已完成',
-           icon:'success'
-         })
+         success: (res) => {
+           if(!res.result.result==true){
+            wx.showToast({
+              title: '提交失败',
+              icon:'none'
+            })
+           } else {
+            wx.showToast({
+              title: '提交成功',
+              icon:'success'
+            })
+           }
+ 
         },
         fail: (res) => {
           wx.showToast({

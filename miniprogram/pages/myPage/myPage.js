@@ -13,6 +13,7 @@ Component({
 
   data: {
     is_logined : false,
+    account_right : 0,
     show_admin_view:false,
     homeShowImagUrl: '../index/user-unlogin.png',
     homePageButtonImageUrl: '/images/my_page.png',
@@ -33,7 +34,8 @@ Component({
         this.setData({
           avatarUrl: app.globalData.avatarUrl,
           nickName_show : '欢迎您 ： ' + this.data.nickName,
-          is_logined: app.globalData.is_login
+          is_logined: app.globalData.is_login,
+          account_right: app.globalData.account_right
         })
       }
     },
@@ -49,7 +51,8 @@ Component({
         this.setData({
           avatarUrl: app.globalData.avatarUrl,
           nickName_show : '欢迎您 ： ' + this.data.nickName,
-          is_logined: app.globalData.is_login
+          is_logined: app.globalData.is_login,
+          account_right: app.globalData.account_right
         })
       }
     },
@@ -62,7 +65,8 @@ Component({
     onVerify :function(){
       if(!this.data.verfity_password==true){
         wx.showToast({
-          title : '密码为空'
+          title : '密码为空',
+          icon:'none'
         })
         return;
       }
@@ -71,24 +75,29 @@ Component({
       }) 
       app.admin_verify(this.data.verfity_password, {
         complete: () => {
-          wx.hideLoading();
+          
         },
          success: (res) => {
-           if(!res == true){
+          wx.hideLoading();
+           if(!res == true){            
             wx.showToast({
               title: '验证失败，请确认是否是管理员或检查密码是否正确',
               icon:'none'
-            })
-           
+            })           
            } else {
             wx.showToast({
               title: '验证成功',
               icon:'success'
             })
+            this.setData({
+              account_right: app.globalData.account_right
+            })
+            this.onShowInfoView();
            }
         
         },
         fail: (res) => {
+          wx.hideLoading();
           wx.showToast({
             title: '验证失败，错误代码： ' + res,
           })
@@ -107,6 +116,11 @@ Component({
     },
     password_input:function(e){
       this.data.verfity_password = e.detail.value;
+    },
+    onAdminPage:function(){
+      wx.navigateTo({
+        url: '../password_replace/password_replace',
+      });
     }
   },  
 })

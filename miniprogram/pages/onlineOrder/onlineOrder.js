@@ -149,9 +149,10 @@ Page({
     promise.then(function(){
       app.push_data_to_server(sumbit_data, {
         complete: () => {
-          wx.hideLoading();
+        
         },
          success: (res) => {
+          wx.hideLoading();
            if(!res.result.result==true){
             wx.showToast({
               title: '提交失败',
@@ -166,6 +167,7 @@ Page({
  
         },
         fail: (res) => {
+          wx.hideLoading();
           wx.showToast({
             title: '提交失败，错误代码： ' + res,
           })

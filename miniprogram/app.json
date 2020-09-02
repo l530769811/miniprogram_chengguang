@@ -16,7 +16,8 @@
     "pages/openapi/cloudid/cloudid",
     "pages/im/im",
     "pages/im/room/room",
-    "pages/region/region"
+    "pages/region/region",
+    "pages/password_replace/password_replace"
   ],
   "tabBar": {
     "custom": true,

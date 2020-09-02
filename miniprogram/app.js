@@ -33,7 +33,7 @@ App({
       avatarUrl: '',
       nickName: '',
       openid: undefined,
-      account_kind: 0,
+      account_right: 0,
       region: ['海南省', '全部', '全部'],
     }
     
@@ -199,8 +199,43 @@ App({
         },
         success: res => {
           if (typeof funs_obj.success === "function") {
+            if(!res.result.result.record_count==false){
+              this.globalData.account_right = res.result.result.record[0].account_right;
+              console.log('验证成功，账号权限 = ' + this.globalData.account_right);
+            }
+            funs_obj.success(res.result.result.record_count);
+          }
+        },
+        fail: err => {
+          if (typeof funs_obj.fail === "function") {
+            funs_obj.fail(err);
+          }
+        }
+      })
+    }
+
+    if (typeof funs_obj.complete === "function") {
+      funs_obj.complete();
+    }
+  },
+  admin_password_replace(src_pw, new_pw, funs_obj){
+    let globalData = this.globalData;
+    if (this.globalData.is_login && !this.globalData.openid == false) {
+      let src_pw_md5 = hex_md5(src_pw);
+      let new_pw_md5 = hex_md5(new_pw);
+      console.log('app.admin_password_replace() src_pw_md5 = ' + src_pw_md5);
+      console.log('app.admin_password_replace() new_pw_md5 = ' + new_pw_md5);
+      wx.cloud.callFunction({
+        name: 'admin_password_replace',
+        data: {
+          owner_openid: this.globalData.openid,
+          src_password_md5: src_pw_md5,
+          new_password_md5: new_pw_md5
+        },
+        success: res => {
+          if (typeof funs_obj.success === "function") {
             if(!res.result.result==false){
-              this.globalData.account_kind = 1;
+              console.log('修改管理员密码成功' );
             }
             funs_obj.success(res.result.result);
           }
@@ -216,5 +251,5 @@ App({
     if (typeof funs_obj.complete === "function") {
       funs_obj.complete();
     }
-  },
+  }
 })

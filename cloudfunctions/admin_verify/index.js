@@ -20,7 +20,10 @@ exports.main = async (event, context) => {
   if (owner_openid != wxContext.OPENID) {
     is_valid = false;
   }
-  let result = 0;
+  let result = {
+    record_count : 0,
+    record : []
+  };
   if (is_valid) {
     try {
       const result_promise = await db.collection('admin_1_4_13_9_14').where({
@@ -34,11 +37,12 @@ exports.main = async (event, context) => {
           }
         })
 
-      result = (result_promise.data.length > 0) ? 1 : 0;
-      if (!result == true) {
+      result.record_count = (result_promise.data.length );
+      result.record = result_promise.data;
+      if (!(result.record_count) == true) {
         //can not find openid of owner_openid, then find defult openid of 
         console.log('admin_verify()  have not openid = ' + owner_openid + ' or admin_password not is ' + password_md5);
-        const result_promise_other = await db.collection('admin_1_4_13_9_14').where({
+        const result_promise_other = await db.collection('admin_1_4_13_9_14').limit(1).where({
             openid_15_16_5_14: 'admin_openid',
             admin_password: password_md5
           })
@@ -48,9 +52,10 @@ exports.main = async (event, context) => {
               console.log(res.data)
             }
           })
-        result = (result_promise_other.data.length > 0) ? 1 : 0;
-        
-        if (!result == false) {
+        result.record_count = (result_promise_other.data.length );
+        result.record = result_promise.data;
+        if (!(result.record_count)  == false) {
+         
           //yes! find the default admin openid, then  delete  it and add owner_openid to db  ;
           const result_remove = await db.collection('admin_1_4_13_9_14').where({
             openid_15_16_5_14: 'admin_openid'
@@ -60,11 +65,12 @@ exports.main = async (event, context) => {
           } else {
             console.log('admin_verify() remove admin_openid fail! ')
           }
-
+          let data_record = result_promise_other.data[0];
           await db.collection('admin_1_4_13_9_14').add({
             data: {
               openid_15_16_5_14: owner_openid,
-              admin_password: password_md5
+              admin_password: password_md5,
+              account_right: data_record.account_right,
             },
             success: function (_res) {
               console.log('login() db.add success res  = ' + _res)
@@ -81,8 +87,8 @@ exports.main = async (event, context) => {
       console.log('admin_verify() db.where().get()  fail _openid = ' + owner_openid + ' err = ' + err)
     }
   }
-  console.log(`admin_verify() result = ${result}`);
-  console.log('admin_verify() result = ' + result);
+  console.log(`admin_verify() result = ${result.record_count}`);
+  console.log('admin_verify() record = ' + result.record.toString());
   return {
     event,
     openid: wxContext.OPENID,

@@ -12,9 +12,9 @@ Component({
   },
 
   data: {
-    is_logined : false,
-    account_right : 0,
-    show_admin_view:false,
+    is_logined: false,
+    account_right: 0,
+    show_admin_view: false,
     homeShowImagUrl: '../index/user-unlogin.png',
     homePageButtonImageUrl: '/images/my_page.png',
     homePageButtonText: '首页',
@@ -24,16 +24,30 @@ Component({
     title_show_text: "我的空间",
     avatarUrl: '../../images/user-unlogin.png',
     nickName: '',
-    nickName_show:'点击头像登录',
-    verfity_password:''
+    nickName_show: '点击头像登录',
+    verfity_password: '',
+    menu_items: [{
+        icon: '../../images/replay_password_icon.png',
+        text: '修改密码'
+      },
+      {
+        icon: '../../images/default_password_icon.png',
+        text: '默认密码'
+      },
+      {
+        icon: '../../images/manager_account_icon.png',
+        text: '管理帐号'
+      }
+    ]
+
   },
   methods: {
-     login_callback : function(){
-      this.data.nickName =  app.globalData.nickName;
-      if(! this.data.nickName==false){
+    login_callback: function () {
+      this.data.nickName = app.globalData.nickName;
+      if (!this.data.nickName == false) {
         this.setData({
           avatarUrl: app.globalData.avatarUrl,
-          nickName_show : '欢迎您 ： ' + this.data.nickName,
+          nickName_show: '欢迎您 ： ' + this.data.nickName,
           is_logined: app.globalData.is_login,
           account_right: app.globalData.account_right
         })
@@ -42,59 +56,63 @@ Component({
     onLoad: function () {
       // 获取用户信息
       let func = this.login_callback.bind(this);
-      app.Login(func);     
+      app.Login(func);
     },
     onGetUserInfo: function (e) {
       app.getUserInfo(e);
-      this.data.nickName =  app.globalData.nickName;
-      if(! this.data.nickName==false){
+      this.data.nickName = app.globalData.nickName;
+      if (!this.data.nickName == false) {
         this.setData({
           avatarUrl: app.globalData.avatarUrl,
-          nickName_show : '欢迎您 ： ' + this.data.nickName,
+          nickName_show: '欢迎您 ： ' + this.data.nickName,
           is_logined: app.globalData.is_login,
           account_right: app.globalData.account_right
         })
       }
     },
     onShowAdminVerifyView: function () {
-     
+
       this.setData({
-        show_admin_view:true,
+        show_admin_view: true,
       })
     },
-    onVerify :function(){
-      if(!this.data.verfity_password==true){
+    onVerify: function () {
+      if (!this.data.verfity_password == true) {
         wx.showToast({
-          title : '密码为空',
-          icon:'none'
+          title: '密码为空',
+          icon: 'none'
         })
         return;
       }
       wx.showLoading({
         title: '正在验证中',
-      }) 
+      })
       app.admin_verify(this.data.verfity_password, {
         complete: () => {
-          
-        },
-         success: (res) => {
           wx.hideLoading();
-           if(!res == true){            
+          wx.showToast({
+            title: '验证超时',
+          })
+          console.log('app.admin_verify() complete')
+        },
+        success: (res) => {
+          wx.hideLoading();
+          if (!res == true) {
             wx.showToast({
               title: '验证失败，请确认是否是管理员或检查密码是否正确',
-              icon:'none'
-            })           
-           } else {
+              icon: 'none'
+            })
+          } else {
             wx.showToast({
               title: '验证成功',
-              icon:'success'
+              icon: 'success'
             })
             this.setData({
               account_right: app.globalData.account_right
             })
             this.onShowInfoView();
-           }
-        
+          }
+
         },
         fail: (res) => {
           wx.hideLoading();
@@ -104,9 +122,9 @@ Component({
         }
       });
     },
-    onShowInfoView:function(){
+    onShowInfoView: function () {
       this.setData({
-        show_admin_view:false,
+        show_admin_view: false,
       })
     },
     onGoToHome: function () {
@@ -114,13 +132,23 @@ Component({
         url: '../app/app_home',
       })
     },
-    password_input:function(e){
+    password_input: function (e) {
       this.data.verfity_password = e.detail.value;
     },
-    onAdminPage:function(){
+    onAdminPage: function () {
       wx.navigateTo({
         url: '../password_replace/password_replace',
       });
-    }
-  },  
+    },
+    on_menu: function (e) {
+      console.log('点中菜单项id = ' + e.detail.index);
+      let index_id = e.detail.index;
+      switch(index_id){
+        case 0:
+          this.onAdminPage();
+          break;
+      }
+    },
+  },
+
 })

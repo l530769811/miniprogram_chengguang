@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "my_pop_menu": "/components/my_pop_menu/my_pop_menu",
+    "upload_img": "/components/upload_img/upload_img"
+  }
 }

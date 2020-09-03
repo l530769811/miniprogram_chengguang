@@ -1,5 +1,6 @@
 //app.js
 import {hex_md5} from './md5/md5'
+let timer_id = 0;
 App({
   onLaunch: function () {
     if (!wx.cloud) {
@@ -173,17 +174,19 @@ App({
           if (typeof funs_obj.success === "function") {
             funs_obj.success(res);
           }
+          clearTimeout(timer_id);
         },
         fail: err => {
           if (typeof funs_obj.fail === "function") {
             funs_obj.fail(err);
           }
+          clearTimeout(timer_id);
         }
       })
     }
 
     if (typeof funs_obj.complete === "function") {
-      funs_obj.complete();
+      timer_id = setTimeout(funs_obj.complete, 5000); 
     }
   },
   admin_verify: function (pw, funs_obj) {
@@ -204,22 +207,26 @@ App({
               console.log('验证成功，账号权限 = ' + this.globalData.account_right);
             }
             funs_obj.success(res.result.result.record_count);
+            
           }
+          clearTimeout(timer_id);
         },
         fail: err => {
           if (typeof funs_obj.fail === "function") {
             funs_obj.fail(err);
           }
+          clearTimeout(timer_id);
         }
       })
     }
 
     if (typeof funs_obj.complete === "function") {
-      funs_obj.complete();
+      timer_id = setTimeout(funs_obj.complete, 5000); 
     }
   },
   admin_password_replace(src_pw, new_pw, funs_obj){
     let globalData = this.globalData;
+    
     if (this.globalData.is_login && !this.globalData.openid == false) {
       let src_pw_md5 = hex_md5(src_pw);
       let new_pw_md5 = hex_md5(new_pw);
@@ -237,19 +244,22 @@ App({
             if(!res.result.result==false){
               console.log('修改管理员密码成功' );
             }
-            funs_obj.success(res.result.result);
+            funs_obj.success(res.result.result);            
           }
+          clearTimeout(timer_id);
         },
         fail: err => {
           if (typeof funs_obj.fail === "function") {
             funs_obj.fail(err);
           }
+          clearTimeout(timer_id);
         }
       })
     }
 
     if (typeof funs_obj.complete === "function") {
-      funs_obj.complete();
+     timer_id = setTimeout(funs_obj.complete, 5000);     
+      
     }
   }
 })

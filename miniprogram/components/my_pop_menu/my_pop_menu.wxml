@@ -1,0 +1,18 @@
+<!--components/pop_menu/pop_menu.wxml-->
+<view class="top_view">
+  <view class="view_button relative full_width inline">
+    <button style="width:100%; margin: 0 auto;" bindtap="onpopmenu">{{text}}</button>
+  </view>
+  
+  <view class="view_menu absolute full_width " wx:if="{{menu_showed}}">
+    <view style="width:{{menu_width}}px" wx:for="{{menu_items}}" wx:key="key">
+      <view style="width:60%; margin: 1px; border-top: 1px solid;   position: relative; left: 20%; " wx:if="{{(index>0 && index%2==1) || index==(menu_items.length-1)}}"></view>     
+      <view class="view_menu_item"  style="display: flex; margin: 0px auto;padding: 5px 0px;" bindtap="on_menu" data-menuid="{{index}}">
+        <image src="{{item.icon}}" wx:if="{{item.icon}}" class="menu_icon"></image>
+        <text class="menu_text">{{item.text}}</text>
+      </view>  
+   </view>
+  </view>
+</view>
+
+

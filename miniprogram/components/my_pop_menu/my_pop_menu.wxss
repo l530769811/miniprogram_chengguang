@@ -1,0 +1,52 @@
+/* components/pop_menu/pop_menu.wxss */
+.top_view{
+  position: relative;
+  margin: 3px;
+}
+.view_button{
+  text-align: center;
+}
+
+.view_menu{
+  text-align: right;
+}
+.view_menu_item{
+  margin: 0px auto;
+  padding: 10px;
+}
+.view_menu_item:active{
+  background: silver;
+}
+
+.menu_text{
+  width:75%;
+  height:auto;
+  text-align: center;
+  font-size: 12px;
+}
+.menu_icon{
+  width:20%;
+  height: auto;
+}
+.absolute{
+  position : absolute;
+}
+.relative{
+  position: relative;
+}
+.float{
+  float:left;
+}
+.full_width{
+  width: 100%;
+ 
+}
+.block{
+  display: block;
+}
+.inline{
+  display: inline;
+}
+.rosybrown_background{
+  background: rosybrown;  
+}

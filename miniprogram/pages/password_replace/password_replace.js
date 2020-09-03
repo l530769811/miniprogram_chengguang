@@ -93,7 +93,10 @@ Page({
 
     app.admin_password_replace(this.data.src_pw, this.data.new_pw, {
       complete: () => {
-        
+        wx.hideLoading();
+        wx.showToast({
+          title: '修改密码超时',
+        })
       },
        success: (res) => {
         wx.hideLoading();

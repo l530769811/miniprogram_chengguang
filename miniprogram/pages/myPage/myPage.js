@@ -32,11 +32,15 @@ Component({
       },
       {
         icon: '../../images/default_password_icon.png',
-        text: '默认密码'
+        text: '增设密码'
       },
       {
         icon: '../../images/manager_account_icon.png',
         text: '管理帐号'
+      },
+      {
+        icon: '../../images/cancel_account_icon.png',
+        text: '注销帐号'
       }
     ]
 
@@ -140,12 +144,20 @@ Component({
         url: '../password_replace/password_replace',
       });
     },
+    addset_password: function () {
+      wx.navigateTo({
+        url: '../password_addset/password_addset',
+      });
+    },
     on_menu: function (e) {
       console.log('点中菜单项id = ' + e.detail.index);
       let index_id = e.detail.index;
-      switch(index_id){
+      switch (index_id) {
         case 0:
           this.onAdminPage();
+          break;
+        case 1:
+          this.addset_password();
           break;
       }
     },

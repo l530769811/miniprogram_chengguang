@@ -227,7 +227,7 @@ App({
   admin_password_replace(src_pw, new_pw, funs_obj){
     let globalData = this.globalData;
     
-    if (this.globalData.is_login && !this.globalData.openid == false) {
+    if (this.globalData.is_login && !this.globalData.openid == false && this.globalData.account_right>0) {
       let src_pw_md5 = hex_md5(src_pw);
       let new_pw_md5 = hex_md5(new_pw);
       console.log('app.admin_password_replace() src_pw_md5 = ' + src_pw_md5);
@@ -243,6 +243,45 @@ App({
           if (typeof funs_obj.success === "function") {
             if(!res.result.result==false){
               console.log('修改管理员密码成功' );
+            }
+            funs_obj.success(res.result.result);            
+          }
+          clearTimeout(timer_id);
+        },
+        fail: err => {
+          if (typeof funs_obj.fail === "function") {
+            funs_obj.fail(err);
+          }
+          clearTimeout(timer_id);
+        }
+      })
+    }
+
+    if (typeof funs_obj.complete === "function") {
+     timer_id = setTimeout(funs_obj.complete, 5000);     
+      
+    }
+  },
+  addset_default_admin_password:function(src_pw, default_pw, _right, funs_obj){
+    let globalData = this.globalData;
+    
+    if (this.globalData.is_login && !this.globalData.openid == false && this.globalData.account_right>1) {
+      let src_pw_md5 = hex_md5(src_pw);
+      let default_pw_md5 = hex_md5(default_pw);
+      console.log('app.addset_default_admin_password() src_pw_md5 = ' + src_pw_md5);
+      console.log('app.addset_default_admin_password() default_pw_md5 = ' + default_pw_md5);
+      wx.cloud.callFunction({
+        name: 'addset_default_admin_password',
+        data: {
+          owner_openid: this.globalData.openid,
+          src_password_md5: src_pw_md5,
+          default_password_md5: default_pw_md5,
+          admin_right : _right,
+        },
+        success: res => {
+          if (typeof funs_obj.success === "function") {
+            if(!res.result.result==false){
+              console.log('增设默认管理员密码成功' );
             }
             funs_obj.success(res.result.result);            
           }

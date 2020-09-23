@@ -41,6 +41,9 @@ Component({
       {
         icon: '../../images/cancel_account_icon.png',
         text: '注销帐号'
+      },
+      {
+        text: '订单通知'
       }
     ]
 
@@ -91,7 +94,7 @@ Component({
       wx.showLoading({
         title: '正在验证中',
       })
-      app.admin_verify(this.data.verfity_password, {
+      app.admin_verify(this.data.verfity_password, this.data.nickName, {
         complete: () => {
           wx.hideLoading();
           wx.showToast({
@@ -149,6 +152,30 @@ Component({
         url: '../password_addset/password_addset',
       });
     },
+    manager_account: function () {
+      wx.navigateTo({
+        url: '../manager_account/manager_account',
+      });
+    },
+    cannel_admin_account :function(){
+
+    },
+    open_order_notify: function () {
+      console.log('请求订阅订单通知');
+      wx.requestSubscribeMessage({
+        tmplIds: ['nXQOGIYACNt6MnpmogFI2ZmnzdtZrjxIbnz9LjBPX9I'],
+        success(res) {
+          console.log('订阅订单通知cehnggong ');
+        },
+        fail(res) {
+          wx.showModal({
+            title: '错误',
+            content : '订阅订单通知出错， 错误码 =  ' + res.errMsg
+          })
+          console.log('订阅订单通知出错， 错误码 =  ' + res.errMsg);
+        }
+      })
+    },
     on_menu: function (e) {
       console.log('点中菜单项id = ' + e.detail.index);
       let index_id = e.detail.index;
@@ -158,6 +185,15 @@ Component({
           break;
         case 1:
           this.addset_password();
+          break;
+        case 2:
+          this.manager_account();
+          break;
+        case 3:
+          this.cannel_admin_account();
+          break;
+        case 4:
+          this.open_order_notify();
           break;
       }
     },

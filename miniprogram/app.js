@@ -1,5 +1,7 @@
 //app.js
-import {hex_md5} from './md5/md5'
+import {
+  hex_md5
+} from './md5/md5'
 let timer_id = 0;
 App({
   onLaunch: function () {
@@ -37,7 +39,7 @@ App({
       account_right: 0,
       region: ['海南省', '全部', '全部'],
     }
-    
+
   },
   isFirstLogin: function () {
     let no_first = 0
@@ -103,7 +105,7 @@ App({
     promise.then(function () {
       isFirstLoginFunc().then((no_first) => {
         console.log('App.login() no_first = ' + no_first)
-       
+
         // 调用云函数
         wx.cloud.callFunction({
           name: 'login',
@@ -139,7 +141,7 @@ App({
     let globalData = this.globalData;
     this.isFirstLogin().then((no_first) => {
       console.log('App.getUserInfo() no_first = ' + no_first)
-      
+
       // 调用云函数
       wx.cloud.callFunction({
         name: 'login',
@@ -168,6 +170,7 @@ App({
         name: 'order_to_server',
         data: {
           owner_openid: this.globalData.openid,
+          owner_nick_name : this.globalData.nickName,
           order_datas: datas
         },
         success: res => {
@@ -186,10 +189,10 @@ App({
     }
 
     if (typeof funs_obj.complete === "function") {
-      timer_id = setTimeout(funs_obj.complete, 5000); 
+      timer_id = setTimeout(funs_obj.complete, 5000);
     }
   },
-  admin_verify: function (pw, funs_obj) {
+  admin_verify: function (pw, nick_name, funs_obj) {
     let globalData = this.globalData;
     if (this.globalData.is_login && !this.globalData.openid == false) {
       let pw_md5 = hex_md5(pw);
@@ -198,16 +201,17 @@ App({
         name: 'admin_verify',
         data: {
           owner_openid: this.globalData.openid,
-          password_md5: pw_md5
+          password_md5: pw_md5,
+          _nick_name: nick_name,
         },
         success: res => {
           if (typeof funs_obj.success === "function") {
-            if(!res.result.result.record_count==false){
+            if (!res.result.result.record_count == false) {
               this.globalData.account_right = res.result.result.record[0].account_right;
               console.log('验证成功，账号权限 = ' + this.globalData.account_right);
             }
             funs_obj.success(res.result.result.record_count);
-            
+
           }
           clearTimeout(timer_id);
         },
@@ -221,13 +225,13 @@ App({
     }
 
     if (typeof funs_obj.complete === "function") {
-      timer_id = setTimeout(funs_obj.complete, 5000); 
+      timer_id = setTimeout(funs_obj.complete, 5000);
     }
   },
-  admin_password_replace(src_pw, new_pw, funs_obj){
+  admin_password_replace(src_pw, new_pw, funs_obj) {
     let globalData = this.globalData;
-    
-    if (this.globalData.is_login && !this.globalData.openid == false && this.globalData.account_right>0) {
+
+    if (this.globalData.is_login && !this.globalData.openid == false && this.globalData.account_right > 0) {
       let src_pw_md5 = hex_md5(src_pw);
       let new_pw_md5 = hex_md5(new_pw);
       console.log('app.admin_password_replace() src_pw_md5 = ' + src_pw_md5);
@@ -241,10 +245,10 @@ App({
         },
         success: res => {
           if (typeof funs_obj.success === "function") {
-            if(!res.result.result==false){
-              console.log('修改管理员密码成功' );
+            if (!res.result.result == false) {
+              console.log('修改管理员密码成功');
             }
-            funs_obj.success(res.result.result);            
+            funs_obj.success(res.result.result);
           }
           clearTimeout(timer_id);
         },
@@ -258,14 +262,14 @@ App({
     }
 
     if (typeof funs_obj.complete === "function") {
-     timer_id = setTimeout(funs_obj.complete, 5000);     
-      
+      timer_id = setTimeout(funs_obj.complete, 5000);
+
     }
   },
-  addset_default_admin_password:function(src_pw, default_pw, _right, funs_obj){
+  addset_default_admin_password: function (src_pw, default_pw, _right, funs_obj) {
     let globalData = this.globalData;
-    
-    if (this.globalData.is_login && !this.globalData.openid == false && this.globalData.account_right>1) {
+
+    if (this.globalData.is_login && !this.globalData.openid == false && this.globalData.account_right > 1) {
       let src_pw_md5 = hex_md5(src_pw);
       let default_pw_md5 = hex_md5(default_pw);
       console.log('app.addset_default_admin_password() src_pw_md5 = ' + src_pw_md5);
@@ -276,14 +280,14 @@ App({
           owner_openid: this.globalData.openid,
           src_password_md5: src_pw_md5,
           default_password_md5: default_pw_md5,
-          admin_right : _right,
+          admin_right: _right,
         },
         success: res => {
           if (typeof funs_obj.success === "function") {
-            if(!res.result.result==false){
-              console.log('增设默认管理员密码成功' );
+            if (!res.result.result == false) {
+              console.log('增设默认管理员密码成功');
             }
-            funs_obj.success(res.result.result);            
+            funs_obj.success(res.result.result);
           }
           clearTimeout(timer_id);
         },
@@ -297,8 +301,54 @@ App({
     }
 
     if (typeof funs_obj.complete === "function") {
-     timer_id = setTimeout(funs_obj.complete, 5000);     
-      
+      timer_id = setTimeout(funs_obj.complete, 5000);
+
     }
+  },
+  request_query: function (_query_case = {
+    type: 0,
+    case: [{
+      item_id: 0,
+      item_value: [{
+        value:'',
+        than_kind: 0,
+        logic: 0
+      }]
+    }],
+  }, funs_obj) {
+    let globalData = this.globalData;
+
+    if (this.globalData.is_login && !this.globalData.openid == false && this.globalData.account_right > 1) {
+     // let default_pw_md5 = hex_md5(default_pw);
+     
+      wx.cloud.callFunction({
+        name: 'request_query',
+        data: {
+          owner_openid: this.globalData.openid,          
+          query_case: _query_case,
+        },
+        success: res => {
+          if (typeof funs_obj.success === "function") {
+            if (!res.result.result.record_count == false) {
+              console.log('查询成功');
+            }
+            funs_obj.success(res.result.result);
+          }
+          clearTimeout(timer_id);
+        },
+        fail: err => {
+          if (typeof funs_obj.fail === "function") {
+            funs_obj.fail(err);
+          }
+          clearTimeout(timer_id);
+        }
+      })
+    }
+
+    if (typeof funs_obj.complete === "function") {
+      timer_id = setTimeout(funs_obj.complete, 5000);
+
+    }
+
   }
 })

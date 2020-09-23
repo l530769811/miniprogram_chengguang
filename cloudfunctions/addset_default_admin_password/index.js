@@ -41,7 +41,7 @@ exports.main = async (event, context) => {
           }]
         })
         console.log(result_promise)
-        result = result_promise._ids[0];
+        result = 1;
       } else {
         err_code = 1;
       }

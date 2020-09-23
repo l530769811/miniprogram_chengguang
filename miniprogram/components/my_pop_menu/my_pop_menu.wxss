@@ -9,6 +9,7 @@
 
 .view_menu{
   text-align: right;
+  z-index: 99;
 }
 .view_menu_item{
   margin: 0px auto;

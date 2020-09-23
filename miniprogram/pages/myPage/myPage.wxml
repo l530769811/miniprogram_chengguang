@@ -22,5 +22,5 @@ style = "width: 100%; height: 100%;"
     <button class="_admin_button button_font" style="width: 20%;" bindtap="onVerify">验证</button>
     <button class="_admin_button button_font" style="width: 20%;" bindtap="onShowInfoView">返回</button>
   </view>  
-  <text>testtesttesttesttesttesttesttesttesttesttesttest</text>
+ 
 </view>

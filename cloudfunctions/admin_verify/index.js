@@ -12,7 +12,8 @@ exports.main = async (event, context) => {
   const db = cloud.database()
   let {
     owner_openid,
-    password_md5
+    password_md5,
+    _nick_name
   } = event;
 
   console.log('password_md5 = ' + password_md5);
@@ -44,7 +45,7 @@ exports.main = async (event, context) => {
         console.log('admin_verify()  have not openid = ' + owner_openid + ' or admin_password not is ' + password_md5);
         const result_promise_other = await db.collection('admin_1_4_13_9_14').limit(1).where({
             openid_15_16_5_14: 'admin_openid',
-            admin_password: password_md5
+            admin_password: password_md5,            
           })
           .get({
             success: function (res) {
@@ -71,6 +72,7 @@ exports.main = async (event, context) => {
               openid_15_16_5_14: owner_openid,
               admin_password: password_md5,
               account_right: data_record.account_right,
+              nick_name : _nick_name,
             },
             success: function (_res) {
               console.log('login() db.add success res  = ' + _res)

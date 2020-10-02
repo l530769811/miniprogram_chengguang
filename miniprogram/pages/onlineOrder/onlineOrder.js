@@ -149,7 +149,10 @@ Page({
     promise.then(function(){
       app.push_data_to_server(sumbit_data, {
         complete: () => {
-        
+          wx.hideLoading();
+          wx.showToast({
+            title: '提交超时',
+          })
         },
          success: (res) => {
           wx.hideLoading();

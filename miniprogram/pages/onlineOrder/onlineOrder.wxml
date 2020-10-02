@@ -26,10 +26,10 @@
   <editor id="editor" class="editor_style" placeholder="{{placeholder}}" bindstatuschange="onStatusChange" bindready="onEditorReady"   style=" width: auto;  height: 20px;"></editor>
   <upload_img class="upload_img_style"
    max-img-count='5' title='上传图片'
-   bindgetuploaderlist="getUploaderList"> 
+   bindgetuploaderlist="getUploaderList" style="border: 1px solid red;"> 
   </upload_img>
-  <view class="upload_button_view">
-    <button class="submit_button" bindtap="submit_to">提交</button>
+  <view class="upload_button_view" >
+    <button class="submit_button" bindtap="submit_to" >提交</button>
     <button class="return_button" bindtap="back_to">返回</button>
   </view>
 </view>

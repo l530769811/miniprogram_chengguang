@@ -1,7 +1,10 @@
 .top_view{   
    display: block;
 }
-
+.upload_img_style{
+  display: flex;
+  margin: 10px;
+}
 .show_admin_button{
    position: absolute;
    right: 5px;
@@ -22,6 +25,7 @@
   width: 50%;
   height: 50%;
   border: 2px solid;
+  margin: 5px;
 }
 
 .userinfo-avatar{

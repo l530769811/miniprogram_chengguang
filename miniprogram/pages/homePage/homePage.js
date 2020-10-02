@@ -47,9 +47,15 @@ Component({
     onOnline() {
       
       if(this.isLogin()){
+       /*
         wx.navigateTo({
           url: '../onlineOrder/onlineOrder?id=0',
         })
+*/
+        wx.navigateTo({
+          url: '../manager_account/manager_account',
+        });
+
       } else {
         wx.switchTab({
           url: '../myPage/myPage',

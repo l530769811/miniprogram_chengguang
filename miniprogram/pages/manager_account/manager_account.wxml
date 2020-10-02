@@ -1,0 +1,36 @@
+<!--miniprogram/pages/manager_account/manager_account.wxml-->
+<view class="margin">
+  <view class="border margin display_flex">
+    <view class="display_flex margin_center border_soild margin" style="width:auto">
+      <view class="text_font_mid margin">权限</view>
+      <picker class="margin border_soild" bindchange="onRightChange" value="{{admin_right}}" range="{{right_array}}">
+        <view class="text_font_mid">{{right_array[admin_right]}}</view>
+      </picker>
+    </view>
+    <input class="margin_center text_font_small border_soild " style="width:30%" placeholder='要搜索的微信昵称'
+      bindinput='onNicknameInput'></input>
+    <button class="margin_center text-center nowrap " style="width:auto" bindtap="onSearchAccount">搜索</button>
+  </view>
+  <view class="margin border_soild" style="height: 300px">
+    <view class="view_list_item border_soild" style="height:auto; margin: 1%;">
+      <view class="hor_center text-center " style="width:30%;  height:auto;">
+        <text class=" text_font_small text-center " style="height:auto">昵称</text>
+      </view>
+      <view class="text-center " style="width:30%;">
+        <text class="hor_center text_font_small text-center">权限</text>
+      </view>
+    </view>
+    <view style="height: 80%; margin: 1%;">
+      <view class="view_list_item border_soild" style="height: 8%;">
+        <view class="text-center" style="width:30%;  height:auto;">
+          <text class="margin_center text-center">ste</text>
+        </view>
+        <view class="text-center" style="width:30%;  height:auto;">
+          <text class="margin_center text-center">dtdsf</text>
+        </view>
+        <text class="margin_center text-center nowrap text_font_small display_flex" style=" width: auto;">删除</text>
+      </view>
+    </view>
+  </view>
+  <button class="margin" bindtap="onBack">返回</button>
+</view>

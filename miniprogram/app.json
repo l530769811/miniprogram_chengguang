@@ -17,7 +17,9 @@
     "pages/im/im",
     "pages/im/room/room",
     "pages/region/region",
-    "pages/password_replace/password_replace"
+    "pages/password_replace/password_replace",
+    "pages/password_addset/password_addset",
+    "pages/manager_account/manager_account"
   ],
   "tabBar": {
     "custom": true,

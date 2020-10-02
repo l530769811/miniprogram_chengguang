@@ -36,10 +36,10 @@ exports.main = async (event, context) => {
 
         result = (result_promise.stats.updated);
     } catch (err) {
-      console.log('admin_verify() db.where().get()   err = ' + err)
+      console.log('admin_password_replace() db.where().get()   err = ' + err)
     }
   }
-  console.log(`admin_verify() result = ${result}`);
+  console.log(`admin_password_replace() result = ${result}`);
   return {
     event,
     openid: wxContext.OPENID,

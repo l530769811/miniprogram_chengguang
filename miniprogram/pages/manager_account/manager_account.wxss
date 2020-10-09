@@ -1,0 +1,53 @@
+/* miniprogram/pages/manager_account/manager_account.wxss */
+.margin{
+  margin: 5px;
+}
+.margin_center{
+  margin:auto  5px ;
+}
+
+.hor_center{
+  margin:auto  0px ;
+}
+
+.border{
+  border: 1px solid;
+}
+
+.display_flex{
+  display: flex;
+}
+
+.display_block{
+  display: block;  
+}
+
+.display_inline{
+  display: inline;  
+}
+
+.text_font_small{
+  font-size: 10px;
+}
+
+.text_font_mid{
+  font-size: 12px;
+}
+
+
+.text-center{
+  text-align: center;
+}
+
+.nowrap{
+  white-space:nowrap;
+}
+.border_soild{
+border: 1px solid;
+}
+.view_list{
+  display: block;
+}
+.view_list_item{
+  display: flex;
+}
